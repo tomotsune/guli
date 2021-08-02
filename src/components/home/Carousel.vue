@@ -14,7 +14,7 @@
 <script setup>
 import useBanner from './hooks/useBanner.ts'
 
-const bannerList = useBanner()
+const bannerList = useBanner(2)
 
 </script>
 

@@ -1,10 +1,8 @@
 import {reactive} from '@vue/reactivity'
 import http from '../../../http'
 
-export default () => {
+export default (limit: number) => {
     const bannerList = reactive([])
-
-    // 查询前两条banner数据
     const listBanner = async (limit: number) => {
         try {
             const res = await http.get(`/educms/banner/list/${limit}`)
@@ -13,9 +11,7 @@ export default () => {
             console.log(e.message)
         }
     }
-
     // 在setup周期执行即可.
-    listBanner(2)
-
+    listBanner(limit)
     return bannerList
 }

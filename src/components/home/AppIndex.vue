@@ -7,7 +7,7 @@
       <!--      <quick-nav style="float: right;margin-top: -450px;margin-right: 480px"></quick-nav>-->
     </div>
     <course-card/>
-    <teacher-card/>
+    <teacher-card style="margin-top: -100px;"/>
     <!--    <update-card id="update-card"></update-card>-->
     <!--    <slogan id="slogan"></slogan>-->
     <about id="about"/>
