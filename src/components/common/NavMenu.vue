@@ -1,19 +1,21 @@
 <template>
-  <div>
     <el-menu
         :default-active="currentPath"
         router
         mode="horizontal"
         background-color="white"
         text-color="#222"
-        active-text-color="red"
-        style="min-width: 1300px">
+        active-text-color="#3BB149"
+        style="min-width: 1300px;">
+
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>
-      <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">White Jotter - Your Mind Palace</span>
+      <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">Your Mind Palace</span>
+      <a href="#" title="谷粒学院" style="position: absolute; right: 5%">
+        <img src="../../assets/img/logo.png" alt="谷粒学院">
+      </a>
     </el-menu>
-  </div>
 </template>
 <script setup lang="ts">
 import {computed, ref} from '@vue/reactivity'
@@ -24,8 +26,10 @@ const route = useRoute()
 const keywords = ref('')
 const navList = ref([
   {name: '/index', navItem: '首页'},
-  {name: '/jotter', navItem: '笔记本'},
-  {name: '/library', navItem: '图书馆'},
+  {name: '/course', navItem: '课程'},
+  {name: '/teacher', navItem: '名师'},
+  {name: '/article', navItem: '文章'},
+  {name: '/qa', navItem: '问答'},
   {name: '/admin', navItem: '个人中心'}
 ])
 const change = (path) => {
