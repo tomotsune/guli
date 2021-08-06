@@ -18,13 +18,13 @@
     </el-menu>
 </template>
 <script setup lang="ts">
-import {computed, ref} from '@vue/reactivity'
+import {ref,reactive} from '@vue/reactivity'
 import {useRoute, useRouter} from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
 const keywords = ref('')
-const navList = ref([
+const navList = reactive([
   {name: '/index', navItem: '首页'},
   {name: '/course', navItem: '课程'},
   {name: '/teacher', navItem: '名师'},

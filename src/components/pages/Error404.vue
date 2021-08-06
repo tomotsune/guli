@@ -1,9 +1,8 @@
 <template>
-  <h2>{{ $store.state.token }}</h2>
+<h2>页面丢失</h2>
 </template>
 
 <script setup>
-
 </script>
 
 <style scoped>
