@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import useBanner from './hooks/useBanner.ts'
+import useBanner from '../../hooks/useBanner.ts'
 
 const bannerList = useBanner(2)
 

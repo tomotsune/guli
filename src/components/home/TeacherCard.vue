@@ -7,7 +7,7 @@
     </header>
     <article class="i-teacher-list">
       <ul class="of">
-        <li v-for="teacher in teacherList" :key="teacher.id">
+        <li v-for="teacher in teacherRes.teacherList" :key="teacher.id">
           <section class="i-teach-wrap">
             <!--            头像-->
             <div class="i-teach-pic">
@@ -39,9 +39,10 @@
 </template>
 
 <script setup>
-import useTeacher from './hooks/useTeacher.ts'
 
-const teacherList = useTeacher(4)
+import useTeacher from '../../hooks/useTeacher.ts'
+
+const teacherRes = useTeacher(1, 4, {level: 2})
 </script>
 
 <style scoped>

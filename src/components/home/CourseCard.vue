@@ -8,7 +8,7 @@
       </header>
       <article class="comm-course-list">
         <ul class="of" id="bna">
-          <li v-for="course in courseList" :key="course.id">
+          <li v-for="course in courseRes.courseList" :key="course.id">
             <div class="cc-l-wrap">
               <section class="course-img">
                 <img
@@ -46,8 +46,9 @@
 </template>
 
 <script setup>
-import useCourse from './hooks/useCourse.ts'
 
-const courseList = useCourse(8)
+import useCourse from '../../hooks/useCourse.ts'
+
+const courseRes = useCourse(1, 8, {})
 
 </script>

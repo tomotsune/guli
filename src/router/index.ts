@@ -22,6 +22,10 @@ const routes = [
                 component: () => import('../components/course/CourseIndex.vue')
             },
             {
+                path: '/teacher',
+                component: () => import('../components/teacher/TeacherIndex.vue')
+            },
+            {
                 path: '/admin',
                 component: () => import('../components/admin/user/UserProfile.vue'),
                 meta: {requireAuth: true},
@@ -52,7 +56,6 @@ router.beforeEach(async (to, from, next) => {
             to.query = {redirect: from.fullPath}
             next()
         } else {
-            console.log('没有token')
             next({path: '/login', query: Object.assign(from.query, {redirect: to.fullPath})})
         }
     } else next()

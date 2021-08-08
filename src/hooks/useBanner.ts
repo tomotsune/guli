@@ -1,8 +1,6 @@
 import {reactive} from '@vue/reactivity'
-import http from '../../../http'
+import http from '../http'
 import {ElMessage} from 'element-plus'
-import {onActivated} from 'vue'
-import {onBeforeRouteUpdate} from 'vue-router'
 
 export default (limit: number) => {
     const bannerList = reactive([])
