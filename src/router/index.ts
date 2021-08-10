@@ -18,17 +18,39 @@ const routes = [
                 component: () => import('../components/home/AppIndex.vue')
             },
             {
-                path: '/course',
-                component: () => import('../components/course/CourseIndex.vue')
+                path: '/curriculum',
+                component: () => import('../components/curriculum/CurriculumIndex.vue'),
+                redirect: '/curriculum/course',
+                children: [
+                    {
+                        path: 'course',
+                        component:()=>import('../components/curriculum/Courses.vue')
+                    },
+                    {
+                        path: ':id',
+                        component: () => import('../components/curriculum/CourseDetails.vue')
+                    }
+                ]
             },
             {
-                path: '/teacher',
-                component: () => import('../components/teacher/TeacherIndex.vue')
+                path: '/faculty',
+                component: () => import('../components/faculty/FacultyIndex.vue'),
+                redirect: '/faculty/teacher',
+                children: [
+                    {
+                        path: 'teacher',
+                        component:()=>import('../components/faculty/Teachers.vue')
+                    },
+                    {
+                        path: ':id',
+                        component: () => import('../components/faculty/TeacherDetails.vue')
+                    }
+                ]
             },
             {
                 path: '/admin',
                 component: () => import('../components/admin/user/UserProfile.vue'),
-                meta: {requireAuth: true},
+                meta: {requireAuth: true}
             }
         ]
     },

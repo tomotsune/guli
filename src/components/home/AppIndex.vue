@@ -1,19 +1,12 @@
-<template>
-  <!--        <side-menu id="side-menu"></side-menu>-->
-  <div class="home">
-    <div id="header-div">
-      <div style="height: 150px"></div>
-      <carousel></carousel>
-      <!--      <quick-nav style="float: right;margin-top: -450px;margin-right: 480px"></quick-nav>-->
-    </div>
-    <course-card/>
-    <teacher-card style="margin-top: -100px;"/>
-    <!--    <update-card id="update-card"></update-card>-->
-    <!--    <slogan id="slogan"></slogan>-->
-    <about id="about"/>
+<template class="home">
+  <div id="header-div">
+    <div style="height: 20px"></div>
+    <carousel></carousel>
   </div>
+  <course-card/>
+  <teacher-card style="margin-top: -100px;"/>
+  <about id="about"/>
 </template>
-
 <script setup>
 import Carousel from './Carousel.vue'
 import About from '../common/About.vue'

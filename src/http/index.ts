@@ -3,8 +3,8 @@ import store from '../store'
 // 创建axios实例
 const http = axios.create({
     // TODO 暂时改为生产环境
-    baseURL: 'http://localhost:8001', //api的base_url
-    timeout: 8000 //超时请求时间
+    baseURL: 'http://tomotsune.asia:9001', //api的base_url
+    timeout: 20000 //超时请求时间
 })
 
 http.interceptors.request.use(

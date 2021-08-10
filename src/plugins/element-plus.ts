@@ -1,4 +1,6 @@
 import {
+    ElRadio,
+    ElRadioButton,
     ElPagination,
     ElDialog,
     ElMenu,
@@ -56,6 +58,8 @@ import {
 
 export default (app) => {
     const components = [
+        ElRadio,
+        ElRadioButton,
         ElPagination,
         ElDialog,
         ElMenu,

@@ -26,8 +26,8 @@ const route = useRoute()
 const keywords = ref('')
 const navList = reactive([
   {name: '/index', navItem: '首页'},
-  {name: '/course', navItem: '课程'},
-  {name: '/teacher', navItem: '名师'},
+  {name: '/curriculum', navItem: '课程'},
+  {name: '/faculty', navItem: '名师'},
   {name: '/article', navItem: '文章'},
   {name: '/qa', navItem: '问答'},
   {name: '/admin', navItem: '个人中心'}
