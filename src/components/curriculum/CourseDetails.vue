@@ -166,7 +166,7 @@
                   <span class="fl ">
                     <tt class="c-red commentContentmeg" style="display: none;"></tt>
                   </span>
-                      <input type="button" @click="saveComment(comment)" value="回复" class="lh-reply-btn">
+                      <input type="button" @click="addComment" value="回复" class="lh-reply-btn">
                     </p>
                   </section>
                 </div>
@@ -248,9 +248,16 @@ const videoPlay = async (video, node) => {
   options.vid = video.videoSourceId
   dialogVisible.value = true
 }
+const addComment = async () => {
+  await saveComment(comment)
+  await updateComment()
+}
 watch(currentPage, async () => {
+  await updateComment()
+})
+const updateComment = async () => {
   const newData = await listCommentAsync(currentPage.value, pageSize.value, {courseId: route.params.id})
   commentRes.commentList = newData.commentList
   commentRes.total = newData.total
-})
+}
 </script>

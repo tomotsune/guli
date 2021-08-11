@@ -30,6 +30,7 @@ export const listCommentAsync = async (current: number, limit: number, commentQu
 }
 
 export const saveComment = async (comment) => {
+    console.log(comment)
     // 检查登录状态
     if (store.state.token) {
         const res = await http.post(`/eduservice/comment/save`, comment)

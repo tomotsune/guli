@@ -138,7 +138,7 @@ const clean = () => {
 }
 
 watch(currentPage, async () => {
-  updateCourseList()
+  await updateCourseList()
 })
 watch(sort, async (to, from) => {
   courseQuery.viewCountSort = ''

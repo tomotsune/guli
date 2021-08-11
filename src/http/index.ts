@@ -4,6 +4,7 @@ import store from '../store'
 const http = axios.create({
     // TODO 暂时改为生产环境
     baseURL: 'http://tomotsune.asia:9001', //api的base_url
+    // baseURL: 'http://localhost:8001',
     timeout: 20000 //超时请求时间
 })
 
