@@ -24,7 +24,7 @@ const routes = [
                 children: [
                     {
                         path: 'course',
-                        component:()=>import('../components/curriculum/Courses.vue')
+                        component: () => import('../components/curriculum/Courses.vue')
                     },
                     {
                         path: ':id',
@@ -39,7 +39,7 @@ const routes = [
                 children: [
                     {
                         path: 'teacher',
-                        component:()=>import('../components/faculty/Teachers.vue')
+                        component: () => import('../components/faculty/Teachers.vue')
                     },
                     {
                         path: ':id',
@@ -61,6 +61,15 @@ const routes = [
     {
         path: '/register',
         component: () => import('../components/Register.vue')
+    },
+    {
+        path: '/payment/:orderNo',
+        component: () => import('../components/pages/Payment.vue'),
+        meta: {requireAuth: true}
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: () => import('../components/pages/Error404.vue')
     }
 ]
 
@@ -75,9 +84,10 @@ router.beforeEach(async (to, from, next) => {
     }
     if (to.meta.requireAuth) {
         if (store.state.token) {
-            to.query = {redirect: from.fullPath}
+            // to.query = {redirect: from.fullPath}
             next()
         } else {
+            // 没有凭证
             next({path: '/login', query: Object.assign(from.query, {redirect: to.fullPath})})
         }
     } else next()

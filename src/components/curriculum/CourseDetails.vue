@@ -34,7 +34,7 @@
                       </span>
         </section>
         <section class="c-attr-mt">
-          <a href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
+          <a href="#" title="立即观看" class="comm-btn c-btn-3" @click.prevent="addOrder">立即观看</a>
         </section>
       </section>
     </aside>
@@ -145,68 +145,67 @@
         </div>
       </aside>
       <div class="clear"></div>
+      <!-- 课程评论区-->
       <div class="mt50 commentHtml">
-        <div>
-          <h6 class="c-c-content c-infor-title" id="i-art-comment">
-            <span class="commentTitle">课程评论</span>
-          </h6>
-          <section class="lh-bj-list pr mt20 replyhtml">
-            <ul>
-              <li class="unBr">
-                <aside class="noter-pic">
-                  <img width="50" height="50" class="picImg" src="https://files.catbox.moe/tdottg.png">
-                </aside>
-                <div class="of">
-                  <section class="n-reply-wrap">
-                    <fieldset>
+        <h6 class="c-c-content c-infor-title" id="i-art-comment">
+          <span class="commentTitle">课程评论</span>
+        </h6>
+        <section class="lh-bj-list pr mt20 replyhtml">
+          <ul>
+            <li class="unBr">
+              <aside class="noter-pic">
+                <img width="50" height="50" class="picImg" src="https://files.catbox.moe/tdottg.png">
+              </aside>
+              <div class="of">
+                <section class="n-reply-wrap">
+                  <fieldset>
                       <textarea name="" v-model="comment.content" placeholder="输入您要评论的文字"
                                 id="commentContent"></textarea>
-                    </fieldset>
-                    <p class="of mt5 tar pl10 pr10">
+                  </fieldset>
+                  <p class="of mt5 tar pl10 pr10">
                   <span class="fl ">
                     <tt class="c-red commentContentmeg" style="display: none;"></tt>
                   </span>
-                      <input type="button" @click="addComment" value="回复" class="lh-reply-btn">
-                    </p>
-                  </section>
+                    <input type="button" @click="addComment" value="回复" class="lh-reply-btn">
+                  </p>
+                </section>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <section class="">
+          <section class="question-list lh-bj-list pr">
+            <ul class="pr10">
+              <li v-for="(comment,index) in commentRes.commentList" :key="comment.id">
+                <aside class="noter-pic">
+                  <img width="50" height="50" class="picImg"
+                       :src="comment.memberAvatar">
+                </aside>
+                <div class="of">
+                <span class="fl">
+                  <span class="fsize12 c-blue">{{ comment.memberNickname }}</span>
+                  <span class="fsize12 c-999 ml5">评论：</span></span>
+                </div>
+                <div class="noter-txt mt5">
+                  <p>{{ comment.content }}</p>
+                </div>
+                <div class="of mt5">
+                <span class="fr"><font class="fsize12 c-999ml5">{{ comment.gmtCreate }}</font>
+                </span>
                 </div>
               </li>
             </ul>
           </section>
-          <section class="">
-            <section class="question-list lh-bj-list pr">
-              <ul class="pr10">
-                <li v-for="(comment,index) in commentRes.commentList" :key="comment.id">
-                  <aside class="noter-pic">
-                    <img width="50" height="50" class="picImg"
-                         :src="comment.memberAvatar">
-                  </aside>
-                  <div class="of">
-                <span class="fl">
-                  <span class="fsize12 c-blue">{{ comment.memberNickname }}</span>
-                  <span class="fsize12 c-999 ml5">评论：</span></span>
-                  </div>
-                  <div class="noter-txt mt5">
-                    <p>{{ comment.content }}</p>
-                  </div>
-                  <div class="of mt5">
-                <span class="fr"><font class="fsize12 c-999ml5">{{ comment.gmtCreate }}</font>
-                </span>
-                  </div>
-                </li>
-              </ul>
-            </section>
-          </section>
-          <div class="paging">
-            <el-pagination
-                v-model:current-page="currentPage"
-                onUpdate:currentPage
-                :page-size="pageSize"
-                :total="commentRes.total"
-                style="padding: 30px 0; text-align: center;"
-                layout="total, prev, pager, next, jumper"
-            />
-          </div>
+        </section>
+        <div class="paging">
+          <el-pagination
+              v-model:current-page="currentPage"
+              onUpdate:currentPage
+              :page-size="pageSize"
+              :total="commentRes.total"
+              style="padding: 30px 0; text-align: center;"
+              layout="total, prev, pager, next, jumper"
+          />
         </div>
       </div>
     </div>
@@ -220,24 +219,26 @@
 </template>
 
 <script setup>
-import {getCourse} from '../../hooks/useCourse.ts'
+import {reactive, ref} from '@vue/reactivity'
 import {useRoute} from 'vue-router'
+import {watch} from 'vue'
+import {getCourse} from '../../hooks/useCourse.ts'
 import {listOutline} from '../../hooks/useChapter.ts'
 import {auth} from '../../hooks/useVideo.ts'
-import {reactive, ref} from '@vue/reactivity'
-import {AliPlayerV3} from 'vue-aliplayer-v3'
 import {listComment, listCommentAsync, saveComment} from '../../hooks/useComment.ts'
-import {watch} from 'vue'
+import {createOrder} from '../../hooks/useOrder.ts'
+import {AliPlayerV3} from 'vue-aliplayer-v3'
 
 const route = useRoute()
 const course = getCourse(route.params.id)
-const outline = listOutline(route.params.id)
 const dialogVisible = ref(false)
 const options = reactive({})
 const currentPage = ref(1)
 const pageSize = ref(3)
+const comment = reactive({courseId: course.id})
+/* 不能使用同时期的变量,如下面的route.params.id若换为course.id将导致数据渲染错误 */
+const outline = listOutline(route.params.id)
 const commentRes = listComment(currentPage.value, pageSize.value, {courseId: route.params.id})
-const comment = reactive({courseId: route.params.id})
 const videoPlay = async (video, node) => {
   if (node.level === 1) return
   options.playauth = await auth(video.videoSourceId)
@@ -248,6 +249,10 @@ const videoPlay = async (video, node) => {
   options.vid = video.videoSourceId
   dialogVisible.value = true
 }
+const addOrder = () => {
+  const order = {courseId: course.id, totalFee: course.price}
+  createOrder(order)
+}
 const addComment = async () => {
   await saveComment(comment)
   await updateComment()
@@ -256,7 +261,7 @@ watch(currentPage, async () => {
   await updateComment()
 })
 const updateComment = async () => {
-  const newData = await listCommentAsync(currentPage.value, pageSize.value, {courseId: route.params.id})
+  const newData = await listCommentAsync(currentPage.value, pageSize.value, {courseId: course.id})
   commentRes.commentList = newData.commentList
   commentRes.total = newData.total
 }

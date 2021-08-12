@@ -16,7 +16,7 @@
       <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="login">登录</el-button>
     </el-form-item>
     <!--      TODO 地址改为nginx的-->
-    <a href="http://localhost:8160/ucenter/wx/login">
+    <a :href="`http://tomotsune.asia:8160/ucenter/wx/login/${path === '/' || path === undefined ? '/index' : path}`">
       <svg style="margin-left: 45%" t="1628239751800" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
            p-id="2126" width="32" height="32">
         <path
@@ -42,12 +42,12 @@ const router = useRouter()
 const route = useRoute()
 const store = useStore()
 const loginForm = reactive({})
+const path = route.query.redirect
 const login = async () => {
   const res = await http.post('/ucenter/member/login', loginForm)
   if (res.data.code === 20000) {
     ElMessage.success('登录成功')
     store.commit('login', res.data.data)
-    const path = route.query.redirect
     await router.replace(path === '/' || path === undefined ? '/index' : path)
   } else {
     ElMessage.error(res.data.msg)

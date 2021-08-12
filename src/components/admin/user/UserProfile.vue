@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-import useInfo from './hooks/useInfo.ts'
+import useInfo from '../../../hooks/useMember.ts'
 const userInfo = useInfo()
 
 </script>
