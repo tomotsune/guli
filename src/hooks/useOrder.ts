@@ -47,13 +47,16 @@ export const qr = async (orderNo) => {
     }
 }
 export const checkPayment = async (orderNo, courseId) => {
-    const res = await http.get(`/dealservice/paylog/info/${orderNo}`)
+    const res = await http.get(`/dealservice/paylog/check/${orderNo}`)
     if (res.data.code === 20000) {
         // 跳转到订单课程详情页
         await router.replace(`/curriculum/${courseId}`)
         ElMessage.success('支付完成')
-    }else {
+    } else {
         ElMessage.error(res.data.msg)
     }
 }
-
+export const checkOrder = async (courseId) => {
+    const res = await http.get(`/dealservice/order/check/${courseId}`)
+    return res.data.code === 20000;
+}

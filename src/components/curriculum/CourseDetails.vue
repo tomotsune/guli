@@ -17,30 +17,35 @@
     <!--右上数据展示区-->
     <aside class="c-attr-wrap">
       <section class="ml20 mr15">
+        <!--标题-->
         <h2 class="hLh30 txtOf mt15">
           <span class="c-fff fsize24">{{ course.title }}</span>
         </h2>
+        <!--价格-->
         <section class="c-attr-jg">
           <span class="c-fff">价格：</span>
           <b class="c-yellow" style="font-size:24px;">￥{{ course.price }}</b>
         </section>
+        <!--讲师-->
         <section class="c-attr-mt c-attr-undis">
           <span class="c-fff fsize14">主讲： {{ course.teacherName }}&nbsp;&nbsp;&nbsp;</span>
         </section>
+        <!--收藏-->
         <section class="c-attr-mt of">
-                      <span class="ml10 vam">
-                          <em class="icon18 scIcon"></em>
-                          <a class="c-fff vam" title="收藏" href="#">收藏</a>
-                      </span>
+          <span class="ml10 vam">
+            <em class="icon18 scIcon"></em>
+            <a class="c-fff vam" title="收藏" href="#">收藏</a>
+          </span>
         </section>
+        <!--立即观看-->
         <section class="c-attr-mt">
-          <a href="#" title="立即观看" class="comm-btn c-btn-3" @click.prevent="addOrder">立即观看</a>
+          <a ref="playBtn" href="#" title="立即观看" class="comm-btn c-btn-3" @click.prevent="">立即购买</a>
         </section>
       </section>
     </aside>
     <!--上层中部数据展示区-->
     <aside class="thr-attr-box">
-      <ol class="thr-attr-ol clearfix">
+      <ol class="thr-attr-ol">
         <li>
           <p>&nbsp;</p>
           <aside>
@@ -221,24 +226,34 @@
 <script setup>
 import {reactive, ref} from '@vue/reactivity'
 import {useRoute} from 'vue-router'
-import {watch} from 'vue'
+import {onMounted, watch} from 'vue'
 import {getCourse} from '../../hooks/useCourse.ts'
 import {listOutline} from '../../hooks/useChapter.ts'
 import {auth} from '../../hooks/useVideo.ts'
 import {listComment, listCommentAsync, saveComment} from '../../hooks/useComment.ts'
-import {createOrder} from '../../hooks/useOrder.ts'
+import {checkOrder, createOrder} from '../../hooks/useOrder.ts'
 import {AliPlayerV3} from 'vue-aliplayer-v3'
 
 const route = useRoute()
-const course = getCourse(route.params.id)
+/* '立即购买/观看'按钮引用 */
+const playBtn = ref()
+/* 视频播放器弹框 */
 const dialogVisible = ref(false)
+/* 播放器配置 */
 const options = reactive({})
+/* 评论,评论分页 */
 const currentPage = ref(1)
 const pageSize = ref(3)
-const comment = reactive({courseId: course.id})
+const comment = reactive({courseId: route.params.id})
+
+/* setup: 初始化课程信息 */
+const course = getCourse(route.params.id)
 /* 不能使用同时期的变量,如下面的route.params.id若换为course.id将导致数据渲染错误 */
+/* setup: 初始化课程大纲 */
 const outline = listOutline(route.params.id)
+/* setup: 初始化评论 */
 const commentRes = listComment(currentPage.value, pageSize.value, {courseId: route.params.id})
+/* 播放视频 */
 const videoPlay = async (video, node) => {
   if (node.level === 1) return
   options.playauth = await auth(video.videoSourceId)
@@ -249,20 +264,31 @@ const videoPlay = async (video, node) => {
   options.vid = video.videoSourceId
   dialogVisible.value = true
 }
+/* 购买课程 */
 const addOrder = () => {
   const order = {courseId: course.id, totalFee: course.price}
   createOrder(order)
 }
+/* 添加课程评论 */
 const addComment = async () => {
   await saveComment(comment)
   await updateComment()
 }
-watch(currentPage, async () => {
-  await updateComment()
-})
+/* 根据条件或分页更新课程评论 */
 const updateComment = async () => {
   const newData = await listCommentAsync(currentPage.value, pageSize.value, {courseId: course.id})
   commentRes.commentList = newData.commentList
   commentRes.total = newData.total
 }
+
+/* 监视评论分页 */
+watch(currentPage, async () => {
+  await updateComment()
+})
+/* 判断用户是否有权播放,onMounted时期异步数据还没有返回,只能通过监听price实现 */
+watch((course.price, async () => {
+  if (Number(course.price) === 0 || await checkOrder(course.id)) {
+    playBtn.value.innerText = '立即观看'
+  }
+}))
 </script>

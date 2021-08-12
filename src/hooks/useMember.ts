@@ -14,11 +14,11 @@ export default () => {
         if (res.data.code === 20000) {
             Object.assign(userInfo, res.data.data)
             ElMessage.success('获取信息成功')
-        } else {
+        } /*else {
             ElMessage.error(res.data.msg)
             // @ts-ignore
             // await router.replace(route.query.redirect)
-        }
+        }*/
     }
     info()
     return userInfo
