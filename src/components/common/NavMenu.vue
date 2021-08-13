@@ -30,7 +30,7 @@ const navList = reactive([
   {name: '/faculty', navItem: '名师'},
   {name: '/article', navItem: '文章'},
   {name: '/qa', navItem: '问答'},
-  {name: '/admin', navItem: '个人中心'}
+  {name: '/login', navItem: '管理中心'}
 ])
 const change = (path) => {
   router.replace({path: path})

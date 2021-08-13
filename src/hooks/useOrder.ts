@@ -6,7 +6,7 @@ import store from '../store'
 
 export const createOrder = async (order) => {
     if (store.state.token) {
-        const res = await http.post(`/dealservice/order/save`, order)
+        const res = await http.post(`/deal/order/save`, order)
         if (res.data.code === 20000) {
             const orderNo = res.data.data
             // 进入需要权限页面时自动添加redirect
@@ -24,7 +24,7 @@ export const createOrder = async (order) => {
 export const infoOrder = (orderNo) => {
     const order = reactive({})
     const infoOrder = async () => {
-        const res = await http.get(`/dealservice/order/info/${orderNo}`)
+        const res = await http.get(`/deal/order/info/${orderNo}`)
         if (res.data.code === 20000) {
             Object.assign(order, res.data.data)
         } else {
@@ -35,7 +35,7 @@ export const infoOrder = (orderNo) => {
     return order
 }
 export const qr = async (orderNo) => {
-    const res = await http.get(`/dealservice/paylog/QR/${orderNo}`)
+    const res = await http.get(`/deal/paylog/QR/${orderNo}`)
     if (res.data.code === 20000) {
         if (res.data.data.result_code === 'SUCCESS') {
         } else {
@@ -47,7 +47,7 @@ export const qr = async (orderNo) => {
     }
 }
 export const checkPayment = async (orderNo, courseId) => {
-    const res = await http.get(`/dealservice/paylog/check/${orderNo}`)
+    const res = await http.get(`/deal/paylog/check/${orderNo}`)
     if (res.data.code === 20000) {
         // 跳转到订单课程详情页
         await router.replace(`/curriculum/${courseId}`)
@@ -57,6 +57,6 @@ export const checkPayment = async (orderNo, courseId) => {
     }
 }
 export const checkOrder = async (courseId) => {
-    const res = await http.get(`/dealservice/order/check/${courseId}`)
+    const res = await http.get(`/deal/order/check/${courseId}`)
     return res.data.code === 20000;
 }

@@ -5,7 +5,7 @@ import {ElMessage} from 'element-plus'
 export default (limit: number) => {
     const bannerList = reactive([])
     const listBanner = async (limit: number) => {
-        const res = await http.get(`/cmsservice/banner/list/${limit}`)
+        const res = await http.get(`/cms/banner/list/${limit}`)
         if (res.data.code === 20000) {
             bannerList.push(...res.data.data)
         } else {

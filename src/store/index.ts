@@ -9,7 +9,7 @@ const store = createStore({
     actions: {},
     mutations: {
         initAdminMenu(state, value) {
-            (state.adminMenus as any) = value
+            state.adminMenus = value
         },
         login(state, value) {
             state.token = value

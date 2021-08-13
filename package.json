@@ -9,6 +9,7 @@
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^2.0.0-rc",
     "axios": "^0.21.1",
+    "echarts": "^5.1.2",
     "element-plus": "^1.0.2-beta.65",
     "qrcode": "^1.4.4",
     "vue": "^3.2.2",

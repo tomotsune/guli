@@ -5,7 +5,7 @@ import {ElMessage} from 'element-plus'
 export default () => {
     const subjectTree = reactive([])
     const listSubject = async () => {
-        const res = await http.get(`/eduservice/subject/listWithTree`)
+        const res = await http.get(`/edu/subject/listWithTree`)
         if (res.data.code === 20000) {
             subjectTree.push(...res.data.data)
         } else {

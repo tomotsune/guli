@@ -9,7 +9,7 @@ import {ElMessage} from 'element-plus'
 export const listCourse = (current: number, limit: number, courseQuery) => {
     const courseRes = reactive({courseList: [], total: 0})
     const listCourse = async () => {
-        const res = await http.post(`/eduservice/course/list/${current}/${limit}`, courseQuery)
+        const res = await http.post(`/edu/course/list/${current}/${limit}`, courseQuery)
         if (res.data.code === 20000) {
             courseRes.courseList = res.data.data.rows
             courseRes.total = res.data.data.total
@@ -22,7 +22,7 @@ export const listCourse = (current: number, limit: number, courseQuery) => {
 }
 
 export const listCourseAsync = async (current: number, limit: number, courseQuery) => {
-    const res = await http.post(`/eduservice/course/list/${current}/${limit}`, courseQuery)
+    const res = await http.post(`/edu/course/list/${current}/${limit}`, courseQuery)
     if (res.data.code === 20000) {
         return {courseList: res.data.data.rows, total: res.data.data.total}
     } else {
@@ -33,7 +33,7 @@ export const listCourseAsync = async (current: number, limit: number, courseQuer
 export const getCourse = (courseId: number) => {
     const course = reactive({})
     const getCourse = async () => {
-        const res = await http.get(`/eduservice/course/show/${courseId}`)
+        const res = await http.get(`/edu/course/show/${courseId}`)
         if (res.data.code === 20000) {
             Object.assign(course, res.data.data)
         } else {
