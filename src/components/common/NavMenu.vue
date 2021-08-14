@@ -28,8 +28,7 @@ const navList = reactive([
   {name: '/index', navItem: '首页'},
   {name: '/curriculum', navItem: '课程'},
   {name: '/faculty', navItem: '名师'},
-  {name: '/article', navItem: '文章'},
-  {name: '/qa', navItem: '问答'},
+  {name: '/jotter', navItem: '文章'},
   {name: '/login', navItem: '管理中心'}
 ])
 const change = (path) => {

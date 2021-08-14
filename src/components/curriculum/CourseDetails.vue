@@ -232,6 +232,8 @@ import {listOutline} from '../../hooks/useChapter.ts'
 import {auth} from '../../hooks/useVideo.ts'
 import {listComment, listCommentAsync, saveComment} from '../../hooks/useComment.ts'
 import {checkOrder, createOrder} from '../../hooks/useOrder.ts'
+// 基于vue3封装的aliplayer, npm安装后在需要的地址局部注册
+// npm地址: https://www.npmjs.com/package/vue-aliplayer-v3
 import {AliPlayerV3} from 'vue-aliplayer-v3'
 
 const route = useRoute()

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^2.0.0-rc",
+    "@kangc/v-md-editor": "^2.3.7",
     "axios": "^0.21.1",
     "echarts": "^5.1.2",
     "element-plus": "^1.0.2-beta.65",

@@ -49,9 +49,12 @@ const routes = [
                 ]
             },
             {
+                path: '/jotter',
+                component: () => import('../components/jotter/Articles.vue')
+            },
+            {
                 path: '/admin/content/editor',
-                component: () => import('../components/admin/content/ArticleEditor.vue'),
-                meta: {requireAuth: true}
+                component:()=>import('../components/admin/content/ArticleEditor.vue')
             }
         ]
     },
@@ -115,7 +118,14 @@ router.beforeEach(async (to, from, next) => {
     } else next()
 })
 
-
+/**
+ * 初始化后台菜单, 如果store中有格式化后的数据就直接通过 `addRoute`方法在运行时动态加入
+ * 如果没有:
+ * 1. 就发请求到后台获取树形结构的路由菜单信息
+ * 2. 按前端路由要求格式化数据
+ * 3. addRoute添加路由
+ * 4. 将格式化数据保存到store中
+ */
 const initAdminMenu = async () => {
     if (store.state.adminMenus.length > 0) {
         store.state.adminMenus.forEach(router.addRoute)
@@ -131,7 +141,10 @@ const initAdminMenu = async () => {
         }
     }
 }
-// routes: 从服务端获得的数据
+/**
+ * 将后端传来的数据递归包装为路由器要求的格式
+ * @param routes 格式化路由集合
+ */
 const formatRoutes = (routes) => {
     let fmtRoutes = []
     routes.forEach(route => {
