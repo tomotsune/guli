@@ -1,4 +1,5 @@
 import {createStore} from 'vuex'
+import router from '../router'
 
 const store = createStore({
     state: {
@@ -18,8 +19,9 @@ const store = createStore({
         logout(state) {
             // 注意不能用 null 清除，否则将无法判断 user 里具体的内容
             state.token = ''
+            state.adminMenus = []
             window.localStorage.removeItem('token')
-            // state.adminMenus = []
+            router.replace('/index')
         }
     }
 

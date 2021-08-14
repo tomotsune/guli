@@ -4,7 +4,7 @@
       <img src="../../assets/img/logo.png" alt="" width="200" style="float: left;margin-top: -15px;">
     </router-link>
 <!--    <span style="font-size: 32px;font-weight: bold;position:absolute;left: 100px">白  卷</span>-->
-    <i class="el-icon-switch-button" v-on:click="logout" style="font-size: 40px;float: right"></i>
+    <i class="el-icon-switch-button" @click="$store.commit('logout')" style="font-size: 40px;float: right"></i>
   </el-card>
 </template>
 

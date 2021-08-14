@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 import http from '../http'
 import store from '../store'
+import {ElMessage} from 'element-plus'
 
 const routes = [
     {
@@ -98,10 +99,10 @@ router.beforeEach(async (to, from, next) => {
     }
     // 登录状态下访问login页面直接跳转到后台首页
     if (store.state.token && to.path.startsWith('/login')) {
-        next('/admin/dashboard')
+        next(store.state.adminMenus[0].children[0].path)
     }
     if (store.state.token && to.path.startsWith('/admin')) {
-        // await initAdminMenu()
+        await initAdminMenu()
     }
     if (to.meta.requireAuth) {
         if (store.state.token) {
@@ -115,22 +116,27 @@ router.beforeEach(async (to, from, next) => {
 })
 
 
-const initAdminMenu = async ()=>{
-    if(store.state.adminMenus.length>0)
-        return
-    const res = await http.get('/ucenter/member/menu')
-    if(res.data.code===20000) {
-        const fmtRoutes = formatRoutes(res.data.data())
-        fmtRoutes.forEach(router.addRoute)
-        store.commit('initAdminMenu',fmtRoutes)
+const initAdminMenu = async () => {
+    if (store.state.adminMenus.length > 0) {
+        store.state.adminMenus.forEach(router.addRoute)
+    } else {
+        const res = await http.get(`/ucenter/permission/info`)
+        if (res.data.code === 20000) {
+            ElMessage.success('菜单获取成功')
+            const fmtRoutes = formatRoutes(res.data.data)
+            fmtRoutes.forEach(router.addRoute)
+            store.commit('initAdminMenu', fmtRoutes)
+        }else {
+            ElMessage.error(res.data.msg)
+        }
     }
 }
 // routes: 从服务端获得的数据
 const formatRoutes = (routes) => {
     let fmtRoutes = []
     routes.forEach(route => {
-        if (route.children) {
-            route.children = formatRoutes(route.children)
+        if (route.collection) {
+            route.collection = formatRoutes(route.collection)
         }
         let fmtRoute = {
             path: route.path,
@@ -142,7 +148,7 @@ const formatRoutes = (routes) => {
             meta: {
                 requireAuth: true
             },
-            children: route.children
+            children: route.collection
         }
         fmtRoutes.push(fmtRoute)
     })
