@@ -18,6 +18,7 @@ export const listTeacher = (current: number, limit: number, teacherQuery) => {
     return teacherRes
 }
 
+
 export const listTeacherAsync = async (current: number, limit: number, teacherQuery) => {
     const res = await http.post(`/edu/teacher/list/${current}/${limit}`, teacherQuery)
     if (res.data.code === 20000) {

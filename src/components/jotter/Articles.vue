@@ -6,12 +6,12 @@
           <div style="float:left;width:85%;height: 150px;">
             <router-link class="article-link" :to="`/jotter/${article.id}`">
               <span style="font-size: 20px">
-                <strong>{{article.title}}</strong>
+                <strong>{{ article.title }}</strong>
               </span>
             </router-link>
-            <el-divider content-position="left">{{article.gmtCreate}}</el-divider>
+            <el-divider content-position="left">{{ article.gmtCreate }}</el-divider>
             <router-link class="article-link" :to="`/jotter/${article.id}`">
-              <p>{{article.summary}}</p>
+              <p>{{ article.summary }}</p>
             </router-link>
           </div>
           <el-image
@@ -34,12 +34,18 @@
 </template>
 
 <script setup>
-import {listArticle} from '../../hooks/useArticle.ts'
+import {listArticle, listArticleAsync} from '../../hooks/useArticle.ts'
 import {ref} from '@vue/reactivity'
-const currentPage =ref(1)
-const pageSize = ref(4)
-const articleRes = listArticle(currentPage.value,pageSize.value,{})
+import {watch} from 'vue'
 
+const pageSize = ref(4)
+const currentPage = ref(1)
+const articleRes = listArticle(currentPage.value, pageSize.value, {})
+watch(currentPage, async () => {
+  const res = await listArticleAsync(currentPage.value, pageSize.value, {})
+  articleRes.articleList = res.articleList
+  articleRes.total = res.total
+})
 </script>
 
 <style scoped>
@@ -49,10 +55,12 @@ const articleRes = listArticle(currentPage.value,pageSize.value,{})
   margin-left: auto;
   margin-right: auto;
 }
+
 .article-link {
   text-decoration: none;
   color: #606266;
 }
+
 .article-link:hover {
   color: #409EFF;
 }
