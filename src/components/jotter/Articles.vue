@@ -4,13 +4,19 @@
       <el-card style="text-align: left">
         <div v-for="article in articleRes.articleList" :key="article.id">
           <div style="float:left;width:85%;height: 150px;">
-            <router-link class="article-link" :to="{path:'jotter/article',query:{id: article.id}}"><span style="font-size: 20px"><strong>{{article.articleTitle}}</strong></span></router-link>
-            <el-divider content-position="left">{{article.articleDate}}</el-divider>
-            <router-link class="article-link" :to="{path:'jotter/article',query:{id: article.id}}"><p>{{article.articleAbstract}}</p></router-link>
+            <router-link class="article-link" :to="`/jotter/${article.id}`">
+              <span style="font-size: 20px">
+                <strong>{{article.title}}</strong>
+              </span>
+            </router-link>
+            <el-divider content-position="left">{{article.gmtCreate}}</el-divider>
+            <router-link class="article-link" :to="`/jotter/${article.id}`">
+              <p>{{article.summary}}</p>
+            </router-link>
           </div>
           <el-image
               style="margin:18px 0 0 30px;width:100px;height: 100px"
-              :src="article.articleCover"
+              :src="article.cover"
               fit="cover"></el-image>
           <el-divider></el-divider>
         </div>
@@ -32,7 +38,7 @@ import {listArticle} from '../../hooks/useArticle.ts'
 import {ref} from '@vue/reactivity'
 const currentPage =ref(1)
 const pageSize = ref(4)
-const articleRes = listArticle(currentPage,pageSize,{})
+const articleRes = listArticle(currentPage.value,pageSize.value,{})
 
 </script>
 

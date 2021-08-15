@@ -2,18 +2,14 @@
 <!-- 作为父页面使用-->
 <!--这里和 App.vue 一样，写入了一个 <router-view/>，也就是子页面（组件）显示的地方-->
 <template>
-  <div>
-    <nav-menu class="nav-menu"></nav-menu>
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-  </div>
+  <nav-menu class="nav-menu"></nav-menu>
+  <router-view/>
+  <about id="about"/>
 </template>
 
 <script setup lang="ts">
-import NavMenu from "./common/NavMenu.vue";
+import NavMenu from './common/NavMenu.vue'
+import About from './common/About.vue'
 </script>
 
 <style scoped>

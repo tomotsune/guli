@@ -10,13 +10,13 @@
         <section class="i-teach-wrap">
           <!--            头像-->
           <div class="i-teach-pic">
-            <a href="/teacher/1" :title="teacher.name">
+            <router-link :to="`/faculty/${teacher.id}`" :title="teacher.name">
               <img :alt="teacher.name" :src="teacher.avatar">
-            </a>
+            </router-link>
           </div>
           <!--            名字-->
           <div class="mt10 hLh30 txtOf tac">
-            <a href="/teacher/1" :title="teacher.name" class="fsize18 c-666">{{ teacher.name }}</a>
+            <router-link :to="`/faculty/${teacher.id}`" :title="teacher.name" class="fsize18 c-666">{{ teacher.name }}</router-link>
           </div>
           <!--            资质-->
           <div class="hLh30 txtOf tac">

@@ -1,9 +1,9 @@
 <template>
   <div class="footer">
     <div style="border-top:1px #1F1F1F solid;">
-      <p class="alt" style="color:#999; line-height:0">&copy; 版权所有：haipinHu &nbsp;
+      <p class="alt" style="color:#999; line-height:0">&copy; 版权所有：胡海彬 &nbsp;
         <span>备案/许可证编号：</span>
-        <a href="" target="_blank" style="color:#999;">赣2020013883号</a>
+        <a href="" target="_blank" style="color:#999;">赣ICP备2020013883号-2</a>
       </p>
     </div>
   </div>
@@ -29,6 +29,7 @@ span {
 }
 .footer {
   background: #2b2e33;
+  width: 100%;
 }
 .footer .alt {
   overflow: hidden;

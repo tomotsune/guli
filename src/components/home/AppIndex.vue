@@ -5,11 +5,10 @@
   </div>
   <course-card/>
   <teacher-card style="margin-top: -100px;"/>
-  <about id="about"/>
+
 </template>
 <script setup>
 import Carousel from './Carousel.vue'
-import About from '../common/About.vue'
 import CourseCard from './CourseCard.vue'
 import TeacherCard from './TeacherCard.vue'
 

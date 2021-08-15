@@ -1,6 +1,5 @@
 <template>
     <el-menu
-        :default-active="currentPath"
         router
         mode="horizontal"
         background-color="white"
@@ -31,17 +30,7 @@ const navList = reactive([
   {name: '/jotter', navItem: '文章'},
   {name: '/login', navItem: '管理中心'}
 ])
-const change = (path) => {
-  router.replace({path: path})
-}
-// const currentPath = computed(() => {
-//   const x = route.path.indexOf('/', 1)
-//   if (x !== -1) {
-//     return this.$route.path.substring(0, x)
-//   } else {
-//     return this.$route.path
-//   }
-// })
+
 </script>
 
 <style scoped>

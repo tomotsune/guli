@@ -50,7 +50,18 @@ const routes = [
             },
             {
                 path: '/jotter',
-                component: () => import('../components/jotter/Articles.vue')
+                component: () => import('../components/jotter/JotterIndex.vue'),
+                redirect: '/jotter/article',
+                children: [
+                    {
+                      path:'article',
+                      component: ()=>import('../components/jotter/Articles.vue')
+                    },
+                    {
+                        path: ':id',
+                        component: () => import('../components/jotter/ArticleDetails.vue')
+                    }
+                ]
             },
             {
                 path: '/admin/content/editor',
@@ -102,10 +113,17 @@ router.beforeEach(async (to, from, next) => {
     }
     // 登录状态下访问login页面直接跳转到后台首页
     if (store.state.token && to.path.startsWith('/login')) {
-        next(store.state.adminMenus[0].children[0].path)
+        console.log(store.state.adminMenus)
+        // 在init执行前这行代码无效
+        //next(store.state.adminMenus[0].children[0].path)
+        next('/admin')
     }
     if (store.state.token && to.path.startsWith('/admin')) {
         await initAdminMenu()
+    }
+    /* 为了在initAdminMenu后让进入后台首页的路由显示第一个页面 */
+    if (store.state.token && to.path.endsWith('/admin')) {
+        next(store.state.adminMenus[0].children[0].path)
     }
     if (to.meta.requireAuth) {
         if (store.state.token) {

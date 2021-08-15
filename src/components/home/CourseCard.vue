@@ -16,11 +16,11 @@
                   :alt="course.title"
               >
               <div class="cc-mask">
-                <a href="#" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
+                <router-link :to="`/curriculum/${course.id}`" title="开始学习" class="comm-btn c-btn-1">开始学习</router-link>
               </div>
             </section>
             <h3 class="hLh30 txtOf mt10">
-              <a href="#" :title="course.title" class="course-title fsize18 c-333">{{ course.title }}</a>
+              <router-link :to="`/curriculum/${course.id}`" :title="course.title" class="course-title fsize18 c-333">{{ course.title }}</router-link>
             </h3>
             <section class="mt10 hLh20 of">
                       <span class="fr jgTag bg-green" v-if="course.price === 0">

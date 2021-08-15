@@ -23,11 +23,11 @@
 <script setup>
 import {computed} from 'vue'
 import {useStore} from 'vuex'
+import {ref} from '@vue/reactivity'
 
 const store = useStore()
 const adminMenus = computed(() => store.state.adminMenus)
-/*const currentPath = store.state.adminMenus[0].children[0].path*/
-console.log(store.state.adminMenus[0].children[0].path)
+
 </script>
 <style scoped>
 .el-menu-admin {
