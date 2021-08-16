@@ -29,7 +29,7 @@
         <el-divider content-position="left">摘要</el-divider>
         <el-input
             type="textarea"
-            v-model="article.articleAbstract"
+            v-model="article.summary"
             rows="6"
             maxlength="255"
             show-word-limit></el-input>
@@ -55,7 +55,7 @@ import {ref} from '@vue/reactivity'
 import {ElMessageBox} from 'element-plus'
 
 const route = useRoute()
-const article = getArticle(route.params.id)
+const article = getArticle(route.query.id)
 const dialogVisible = ref(false)
 const save = async () => {
   dialogVisible.value = false

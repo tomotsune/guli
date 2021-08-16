@@ -1,12 +1,8 @@
 import {reactive} from '@vue/reactivity'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
 import {ElMessage} from 'element-plus'
 import http from '../http'
 
-export default () => {
-    const route = useRoute()
-    const router = useRouter()
+export const info = () => {
     const userInfo = reactive({})
 
     const info = async () => {
@@ -14,12 +10,30 @@ export default () => {
         if (res.data.code === 20000) {
             Object.assign(userInfo, res.data.data)
             ElMessage.success('获取信息成功')
-        } /*else {
-            ElMessage.error(res.data.msg)
-            // @ts-ignore
-            // await router.replace(route.query.redirect)
-        }*/
+        }
     }
     info()
     return userInfo
+}
+export const listMember = (current: number, limit: number, memberQuery) => {
+    const memberRes = reactive({memberList: [], total: 0})
+    const listMember = async () => {
+        const res = await http.post(`/ucenter/member/list/${current}/${limit}`, memberQuery)
+        if (res.data.code === 20000) {
+            memberRes.memberList = res.data.data.rows
+            memberRes.total = res.data.data.total
+        } else {
+            ElMessage.error(res.data.msg)
+        }
+    }
+    listMember()
+    return memberRes
+}
+export const listMemberAsync = async (current: number, limit: number, memberQuery) => {
+    const res = await http.post(`/ucenter/member/list/${current}/${limit}`, memberQuery)
+    if (res.data.code === 20000) {
+        return {memberList: res.data.data.rows, total: res.data.data.total}
+    } else {
+        ElMessage.error(res.data.msg)
+    }
 }

@@ -25,7 +25,7 @@ http.interceptors.request.use(
 http.interceptors.response.use(
     async res => {
         /* 捕获未登录的错误响应 */
-        if (res.data.code === 60101) {
+        if (res.data.code === 60101||res.data.code === 60102) {
             store.commit('logout')
             await router.replace('/login')
             ElMessage.warning(res.data.msg)

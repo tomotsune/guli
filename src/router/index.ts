@@ -65,7 +65,10 @@ const routes = [
             },
             {
                 path: '/admin/content/editor',
-                component:()=>import('../components/admin/content/ArticleEditor.vue')
+                component:()=>import('../components/admin/content/ArticleEditor.vue'),
+                meta: {
+                    requireAuth: true
+                }
             }
         ]
     },
@@ -150,7 +153,6 @@ const initAdminMenu = async () => {
     } else {
         const res = await http.get(`/ucenter/permission/info`)
         if (res.data.code === 20000) {
-            ElMessage.success('菜单获取成功')
             const fmtRoutes = formatRoutes(res.data.data)
             fmtRoutes.forEach(router.addRoute)
             store.commit('initAdminMenu', fmtRoutes)
@@ -163,17 +165,17 @@ const initAdminMenu = async () => {
  * 将后端传来的数据递归包装为路由器要求的格式
  * @param routes 格式化路由集合
  */
+const modules = import.meta.glob('../components/admin/**/**.vue')
 const formatRoutes = (routes) => {
     let fmtRoutes = []
+
     routes.forEach(route => {
         if (route.collection) {
             route.collection = formatRoutes(route.collection)
         }
         let fmtRoute = {
             path: route.path,
-            component: () => {
-                import('./components/admin/' + route.component + '.vue')
-            },
+            component:modules[/* @vite-ignore */`../components/admin/${route.component}.vue`],
             name: route.name,
             icon: route.icon,
             meta: {

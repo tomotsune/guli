@@ -7,7 +7,7 @@
       text-color="#fff"
       active-text-color="#ffd04b">
     <div style="height: 80px;"></div>
-    <el-submenu v-for="(menu,i) in adminMenus" :index="i" style="text-align: left">
+    <el-submenu v-for="(menu,i) in adminMenus" :index="i+''" style="text-align: left">
       <template #title style="font-size: 17px;">
         <i :class="menu.icon"></i>
         {{ menu.name }}
@@ -23,7 +23,6 @@
 <script setup>
 import {computed} from 'vue'
 import {useStore} from 'vuex'
-import {ref} from '@vue/reactivity'
 
 const store = useStore()
 const adminMenus = computed(() => store.state.adminMenus)

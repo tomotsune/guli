@@ -1,10 +1,25 @@
 <template>
-<h2>页面丢失</h2>
+  <div class="error-page">
+    <div style="padding:100px 500px 0px 0px">
+      <img src="../../assets/img/404.jpg" class="error-tag">
+    </div>
+  </div>
 </template>
 
-<script setup>
+<script>
+export default {
+  name: 'Error404'
+}
 </script>
 
 <style scoped>
-
+.error-page {
+  background:url("../../assets/photo/bg/bg2.jpg") no-repeat;
+  background-position: center;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  position: fixed;
+}
 </style>

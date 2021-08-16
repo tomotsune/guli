@@ -1,6 +1,6 @@
 import {reactive, ref} from '@vue/reactivity'
 import http from '../http'
-import {ElMessage} from 'element-plus'
+import {ElMessage, ElMessageBox} from 'element-plus'
 import {h} from 'vue'
 
 export const getArticle = (articleId) => {
@@ -44,5 +44,20 @@ export const saveArticle = async (article) => {
         ElMessage.success('保存成功')
     } else {
         ElMessage.error(res.data.msg)
+    }
+}
+export const removeArticle = async (articles) => {
+    const confirm = await ElMessageBox.confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    })
+    if (confirm === 'confirm') {
+        const res = await http.delete(`/cms/article/delete/${articles}`)
+        if (res.data.code === 20000) {
+            ElMessage.success('保存成功')
+        } else {
+            ElMessage.error(res.data.msg)
+        }
     }
 }

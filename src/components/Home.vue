@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import NavMenu from './common/NavMenu.vue'
-import About from './common/About.vue'
+import NavMenu from 'comps/common/NavMenu.vue'
+import About from 'comps/common/About.vue'
 </script>
 
 <style scoped>
