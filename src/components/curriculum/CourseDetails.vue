@@ -39,7 +39,7 @@
         </section>
         <!--立即观看-->
         <section class="c-attr-mt">
-          <a ref="playBtn" href="#" title="立即观看" class="comm-btn c-btn-3" @click.prevent="">立即购买</a>
+          <a ref="playBtn" href="#" title="立即观看" class="comm-btn c-btn-3" @click.prevent="addOrder">立即购买</a>
         </section>
       </section>
     </aside>
@@ -97,7 +97,7 @@
                 </div>
               </div>
               <!--课程大纲-->
-              <div class="mt50">
+              <div class="mt50" id="outline">
                 <h6 class="c-g-content c-infor-title">
                   <span>课程大纲</span>
                 </h6>
@@ -267,9 +267,14 @@ const videoPlay = async (video, node) => {
   dialogVisible.value = true
 }
 /* 购买课程 */
-const addOrder = () => {
-  const order = {courseId: course.id, totalFee: course.price}
-  createOrder(order)
+const addOrder = async () => {
+  // 1. 先判断
+  if (await checkOrder(course.id))
+    document.getElementById('outline').scrollIntoView()
+  else {
+    const order = {courseId: course.id, totalFee: course.price}
+    await createOrder(order)
+  }
 }
 /* 添加课程评论 */
 const addComment = async () => {

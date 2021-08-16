@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    // 跳过typescript对第三方依赖的类型检查
+    "skipLibCheck":true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
