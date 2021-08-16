@@ -39,7 +39,7 @@
 <script setup>
 
 import {ref} from '@vue/reactivity'
-import {listMember, listMemberAsync} from '../../../hooks/useMember.ts'
+import {listMember, listMemberAsync} from '/hooks/useMember.ts'
 import {watch} from 'vue'
 
 const currentPage = ref(1)
