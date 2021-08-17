@@ -17,7 +17,6 @@
 <script setup>
 import AdminMenu from './AdminMenu.vue'
 import Header from './Header.vue'
-import About from '../common/About.vue'
 
 
 </script>

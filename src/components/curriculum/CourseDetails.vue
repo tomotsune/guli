@@ -227,11 +227,11 @@
 import {reactive, ref} from '@vue/reactivity'
 import {useRoute} from 'vue-router'
 import {onMounted, watch} from 'vue'
-import {getCourse} from '../../hooks/useCourse.ts'
-import {listOutline} from '../../hooks/useChapter.ts'
-import {auth} from '../../hooks/useVideo.ts'
-import {listComment, listCommentAsync, saveComment} from '../../hooks/useComment.ts'
-import {checkOrder, createOrder} from '../../hooks/useOrder.ts'
+import {getCourse} from 'hooks/useCourse.ts'
+import {listOutline} from 'hooks/useChapter.ts'
+import {auth} from 'hooks/useVideo.ts'
+import {listComment, listCommentAsync, saveComment} from 'hooks/useComment.ts'
+import {checkOrder, createOrder} from 'hooks/useOrder.ts'
 // 基于vue3封装的aliplayer, npm安装后在需要的地址局部注册
 // npm地址: https://www.npmjs.com/package/vue-aliplayer-v3
 import {AliPlayerV3} from 'vue-aliplayer-v3'
@@ -293,9 +293,14 @@ watch(currentPage, async () => {
   await updateComment()
 })
 /* 判断用户是否有权播放,onMounted时期异步数据还没有返回,只能通过监听price实现 */
-watch((course.price, async () => {
-  if (Number(course.price) === 0 || await checkOrder(course.id)) {
+// watch((course.price, async () => {
+//   if (Number(course.price) === 0 || await checkOrder(course.id)) {
+//     playBtn.value.innerText = '立即观看'
+//   }
+// }))
+watch(() => course.price, async () => {
+  if (course.price === 0 || await checkOrder(course.id)) {
     playBtn.value.innerText = '立即观看'
   }
-}))
+})
 </script>

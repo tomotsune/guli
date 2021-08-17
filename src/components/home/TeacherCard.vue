@@ -38,7 +38,7 @@
 
 <script setup>
 
-import {listTeacher} from '../../hooks/useTeacher.ts'
+import {listTeacher} from 'hooks/useTeacher.ts'
 
 const teacherRes = listTeacher(1, 4, {level: 2})
 </script>

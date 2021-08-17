@@ -9,21 +9,25 @@
   <el-card style="margin: 18px 2%;width: 95%">
     <el-table
         :data="memberRes.memberList"
-        stripe
-        style="width: 100%">
-      <el-table-column prop="id" label="id" sortable width="100"></el-table-column>
-      <el-table-column prop="nickname" label="用户名" fit></el-table-column>
-      <el-table-column prop="gmtCreate" label="创建时间" fit></el-table-column>
-      <!--      <el-table-column label="状态" sortable width="100">-->
-      <!--        <template #default="scope">-->
-      <!--          <el-switch-->
-      <!--              v-model="scope.row.isDisabled"-->
-      <!--              active-color="#13ce66"-->
-      <!--              inactive-color="#ff4949"-->
-      <!--              @change="(value) => commitStatusChange(value, scope.row)">-->
-      <!--          </el-switch>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
+        style="width: 100%" @sort-change="sortChange">
+      <el-table-column prop="id" label="id" width="100"></el-table-column>
+      <el-table-column prop="nickname" label="用户名"></el-table-column>
+      <el-table-column prop="gmtCreate" label="创建时间" sortable="custom"></el-table-column>
+      <el-table-column label="状态" width="100" align="right">
+        <template #header>
+          <el-input
+              v-model="memberQuery.nickname"
+              size="mini"
+              placeholder="输入昵称进行模糊匹配"/>
+        </template>
+        <template #default="scope">
+          <el-switch
+              v-model="scope.row.isDisabled"
+              active-color="#ff4949" inactive-color="#13ce66"
+              @change="(value) => memberStatusChange(scope.row.id,value)">
+          </el-switch>
+        </template>
+      </el-table-column>
     </el-table>
   </el-card>
   <el-pagination
@@ -38,19 +42,29 @@
 
 <script setup>
 
-import {ref} from '@vue/reactivity'
-import {listMember, listMemberAsync} from '/hooks/useMember.ts'
+import {reactive, ref} from '@vue/reactivity'
+import {listMember, listMemberAsync, updateMember} from 'hooks/useMember.ts'
 import {watch} from 'vue'
 
 const currentPage = ref(1)
-const pageSize = ref(5)
-const memberRes = listMember(currentPage.value, pageSize.value, {})
+const pageSize = ref(7)
+const memberQuery = reactive({nickname: ''})
+const memberRes = listMember(currentPage.value, pageSize.value, memberQuery)
 watch(currentPage, async () => {
   await updateMemberList()
 })
+const memberStatusChange = async (memberId, status) => {
+  await updateMember({id: memberId, isDisabled: status})
+  await updateMemberList()
+}
 const updateMemberList = async () => {
-  const res = await listMemberAsync(currentPage.value, pageSize.value, {})
+  const res = await listMemberAsync(currentPage.value, pageSize.value, memberQuery)
   memberRes.memberList = res.memberList
   memberRes.total = res.total
 }
+const sortChange = async (column) => {
+  memberQuery.gmtCreateSort = column.order
+  await updateMemberList()
+}
+watch(() => memberQuery.nickname, updateMemberList)
 </script>

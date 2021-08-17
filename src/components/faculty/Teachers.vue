@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import {listTeacher, listTeacherAsync} from '../../hooks/useTeacher.ts'
+import {listTeacher, listTeacherAsync} from 'hooks/useTeacher.ts'
 import {ref, watch} from 'vue'
 import http from '../../http'
 import {ElMessage} from 'element-plus'

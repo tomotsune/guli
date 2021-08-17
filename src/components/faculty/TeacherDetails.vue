@@ -66,9 +66,9 @@
   <!-- /讲师介绍 结束 -->
 </template>
 <script setup>
-import {getTeacher} from '../../hooks/useTeacher.ts'
+import {getTeacher} from 'hooks/useTeacher.ts'
 import {useRoute} from 'vue-router'
-import {listCourse} from '../../hooks/useCourse.ts'
+import {listCourse} from 'hooks/useCourse.ts'
 
 const route = useRoute()
 const teacher = getTeacher(route.params.id)

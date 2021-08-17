@@ -25,15 +25,13 @@
         </tr>
         <tr class="good">
           <td class="name First">
-            <!--           TODO: 上线前改为tomotsune.asia-->
-            <a target="_blank" :href="'https://localhost:3000/curriculem/'+order.courseId">
-              <img :src="order.courseCover"></a>
+            <el-link target="_blank" :href="`#/curriculum/${order.courseId}`">
+              <img :src="order.courseCover"></el-link>
             <div class="goodInfo">
               <input type="hidden" class="ids ids_14502" value="14502">
-              <!--           TODO: 上线前改为tomotsune.asia-->
-              <a target="_blank" :href="'https://localhost:3000/curriculem/'+ order.courseId">
+              <el-link target="_blank" :href="`#/curriculum/${order.courseId}`">
                 {{ order.courseTitle }}
-              </a>
+              </el-link>
             </div>
           </td>
           <td class="price">

@@ -37,3 +37,11 @@ export const listMemberAsync = async (current: number, limit: number, memberQuer
         ElMessage.error(res.data.msg)
     }
 }
+export const updateMember = async (member) => {
+    const res = await http.put(`/ucenter/member/update`, member)
+    if (res.data.code === 20000) {
+        ElMessage.success('修改成功')
+    } else {
+        ElMessage.error(res.data.msg)
+    }
+}

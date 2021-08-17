@@ -50,20 +50,30 @@ export const checkPayment = async (orderNo, courseId) => {
     const res = await http.get(`/deal/paylog/check/${orderNo}`)
     if (res.data.code === 20000) {
         // 跳转到订单课程详情页
-        if (res.data.date === 'SUCCESS') {
-            await router.replace(`/curriculum/${courseId}`)
-            ElMessage.success('支付完成')
-        } else if (res.data.date === 'NOTPAY') {
-            ElMessage.warning('未完成支付')
-        }else if (res.data.data === 'NULL') {
-            await router.replace(`/curriculum/${courseId}`)
-            ElMessage.warning('订单不存在,请重新提交订单后再试')
-        }
+        await router.replace(`/curriculum/${courseId}`)
+        ElMessage.success('支付完成')
     } else {
         ElMessage.error(res.data.msg)
     }
 }
 export const checkOrder = async (courseId) => {
     const res = await http.get(`/deal/order/check/${courseId}`)
-    return res.data.code === 20000
+    if (res.data.code === 20000) {
+        return res.data.data === 'SUCCESS'
+    } else {
+        ElMessage.error(res.data.msg)
+    }
+}
+export const listOrder = () => {
+    const orderList = reactive([])
+    const listOrder = async () => {
+        const res = await http.get(`/deal/order/list`)
+        if (res.data.code === 20000) {
+            orderList.push(...res.data.data)
+        } else {
+            ElMessage.error(res.data.msg)
+        }
+    }
+    listOrder()
+    return orderList
 }

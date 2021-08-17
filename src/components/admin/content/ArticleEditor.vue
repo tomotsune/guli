@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import {getArticle, saveArticle} from '../../../hooks/useArticle.ts'
+import {getArticle, saveArticle} from 'hooks/useArticle.ts'
 import {useRoute} from 'vue-router'
 import {ref} from '@vue/reactivity'
 import {ElMessageBox} from 'element-plus'

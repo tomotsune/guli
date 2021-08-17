@@ -1,5 +1,4 @@
 import {
-    ElSlider,
     ElPagination,
     ElDialog,
     ElMenu,
@@ -57,7 +56,6 @@ import {
 
 export default (app) => {
     const components = [
-        ElSlider,
         ElPagination,
         ElDialog,
         ElMenu,

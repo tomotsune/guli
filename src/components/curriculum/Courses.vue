@@ -111,12 +111,11 @@
   </div>
 </template>
 <script setup>
-import listSubject from '../../hooks/useSubject.ts'
-import {listCourse, listCourseAsync} from '../../hooks/useCourse.ts'
+import listSubject from 'hooks/useSubject.ts'
+import {listCourse, listCourseAsync} from 'hooks/useCourse.ts'
 import {reactive} from '@vue/reactivity'
 import {ref, watch} from 'vue'
-import http from '../../http'
-import {ElMessage} from 'element-plus'
+
 
 const courseQuery = reactive({})
 const currentPage = ref(1)

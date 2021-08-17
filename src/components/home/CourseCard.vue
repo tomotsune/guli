@@ -45,7 +45,7 @@
 
 <script setup>
 
-import {listCourse} from '../../hooks/useCourse.ts'
+import {listCourse} from 'hooks/useCourse.ts'
 
 const courseRes = listCourse(1, 4, {})
 
