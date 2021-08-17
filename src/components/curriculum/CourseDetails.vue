@@ -226,7 +226,7 @@
 <script setup>
 import {reactive, ref} from '@vue/reactivity'
 import {useRoute} from 'vue-router'
-import {onMounted, watch} from 'vue'
+import {watch} from 'vue'
 import {getCourse} from 'hooks/useCourse.ts'
 import {listOutline} from 'hooks/useChapter.ts'
 import {auth} from 'hooks/useVideo.ts'
@@ -293,11 +293,6 @@ watch(currentPage, async () => {
   await updateComment()
 })
 /* 判断用户是否有权播放,onMounted时期异步数据还没有返回,只能通过监听price实现 */
-// watch((course.price, async () => {
-//   if (Number(course.price) === 0 || await checkOrder(course.id)) {
-//     playBtn.value.innerText = '立即观看'
-//   }
-// }))
 watch(() => course.price, async () => {
   if (course.price === 0 || await checkOrder(course.id)) {
     playBtn.value.innerText = '立即观看'

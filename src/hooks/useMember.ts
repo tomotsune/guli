@@ -15,6 +15,23 @@ export const info = () => {
     info()
     return userInfo
 }
+export const simpleInfo = async (memberId) => {
+    const res = await http.get(`/ucenter/member/info/${memberId}`)
+    if (res.data.code === 20000) {
+        return {memberAvatar: res.data.data.avatar, memberNickname: res.data.data.nickname}
+    } else {
+        ElMessage.error(res.data.msg)
+    }
+}
+export const getMemberId = async () => {
+    const res = await http.get(`/ucenter/member/getId`)
+    if (res.data.code === 20000) {
+        return res.data.data
+    } else {
+        ElMessage.error(res.data.msg)
+    }
+}
+
 export const listMember = (current: number, limit: number, memberQuery) => {
     const memberRes = reactive({memberList: [], total: 0})
     const listMember = async () => {

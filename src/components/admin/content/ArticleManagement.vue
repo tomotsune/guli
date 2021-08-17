@@ -63,15 +63,15 @@
 
 <script setup>
 import {listArticle, listArticleAsync, removeArticle} from 'hooks/useArticle.ts'
-import {ref} from '@vue/reactivity'
+import {reactive, ref} from '@vue/reactivity'
 import {computed, watch} from 'vue'
 
 const pageSize = ref(4)
 const currentPage = ref(1)
-const articleRes = listArticle(currentPage.value, pageSize.value, {})
+const articleRes = listArticle(currentPage.value, pageSize.value)
 
 const updateArticleList = async () => {
-  const res = await listArticleAsync(currentPage.value, pageSize.value, {})
+  const res = await listArticleAsync(currentPage.value, pageSize.value)
   articleRes.articleList = res.articleList
   articleRes.total = res.total
 }

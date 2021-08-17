@@ -49,16 +49,15 @@
 </template>
 
 <script setup>
-import {getArticle, saveArticle} from 'hooks/useArticle.ts'
+import {getArticle, saveOrUpdateArticle} from 'hooks/useArticle.ts'
 import {useRoute} from 'vue-router'
 import {ref} from '@vue/reactivity'
-import {ElMessageBox} from 'element-plus'
 
 const route = useRoute()
 const article = getArticle(route.query.id)
 const dialogVisible = ref(false)
 const save = async () => {
   dialogVisible.value = false
-  await saveArticle(article)
+  await saveOrUpdateArticle(article)
 }
 </script>
