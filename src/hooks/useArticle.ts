@@ -19,11 +19,16 @@ export const getArticle = (articleId) => {
     getArticle()
     return article
 }
-export const listArticle = (current: number, limit: number) => {
+export const listArticle = (current: number, limit: number, articleQuery) => {
     const articleRes = reactive({articleList: [], total: 0})
     const listArticle = async () => {
-        const memberId = await getMemberId()
-        const res = await http.post(`/cms/article/list/${current}/${limit}`, {memberId})
+        let res = null
+        if (articleQuery == undefined) {
+            const memberId = await getMemberId()
+            res = await http.post(`/cms/article/list/${current}/${limit}`, {memberId})
+        } else {
+            res = await http.post(`/cms/article/list/${current}/${limit}`, articleQuery)
+        }
         if (res.data.code === 20000) {
             articleRes.articleList = res.data.data.rows
             articleRes.total = res.data.data.total

@@ -1,4 +1,5 @@
 import {
+    ElTransfer,
     ElAvatar,
     ElPagination,
     ElDialog,
@@ -57,6 +58,7 @@ import {
 
 export default (app) => {
     const components = [
+        ElTransfer,
         ElAvatar,
         ElPagination,
         ElDialog,
